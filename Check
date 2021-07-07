@@ -1,0 +1,38 @@
+import java.io.*;
+import java.net.*;
+class Check1
+{
+  public static int server_port=2500;
+  public static int client_port=2501;
+  public static DatagramSocket dgsock;
+  public static byte buffer[]= new byte[512];
+  
+  public static void dgServer() throws Exception
+  {
+    System.out.println("server starts.......");
+    int ptr=0;
+    for( ; ;)
+    {
+      int nextchar=System.in.read();
+      switch(nextchar)
+      {
+        case '1': System.out.println("Exiting......");
+                return;
+        case '\n': dgsock.send(new DatagramPacket(buffer,ptr,InetAddress.getLocalHost(),client_port));
+   
+                   ptr=0;
+                   break;
+        default: buffer[ptr++]=(byte)nextchar;
+       }
+     }
+   }
+  
+ 
+
+    public static void main(String args[]) throws Exception
+    {
+        dgsock=new DatagramSocket(server_port);
+        dgServer();
+      }
+    
+} 
